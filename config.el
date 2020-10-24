@@ -72,9 +72,9 @@
   :config
   (centaur-tabs-mode t)
   (centaur-tabs-headline-match)
-  (setq centaur-tabs-set-bar 'over
-        centaur-tabs-style "bar"
+  (setq centaur-tabs-style "bar"
         centaur-tabs-set-icons t
+        centaur-tabs-set-bar 'over
         centaur-tabs-set-close-button nil
         centaur-tabs-set-modified-marker t
         centaur-tabs-modified-marker "•"
@@ -85,12 +85,28 @@
 
 (setq which-key-idle-delay 0.5)
 
+(map! :leader
+      :desc "Magit push"
+      "g p" 'magit-push)
+
 (after! org
   (require 'org-bullets)
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-  (setq org-directory "~/Documents/org/"
+  (setq org-priority-faces '((65 :foreground "#e45649")
+                             (66 :foreground "#da8548")
+                             (67 :foreground "#0098dd"))
+        org-directory "~/Documents/org/"
         org-ellipsis " ▼ "
-        org-log-done 'time))
+        org-log-done 'time
+        org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)"))
+        org-todo-keyword-faces
+        '(("TODO" :foreground "#7c7c75" :weight normal :underline t)
+          ("WAITING" :foreground "#9f7efe" :weight normal :underline t)
+          ("INPROGRESS" :foreground "#0098dd" :weight normal :underline t)
+          ("DONE" :foreground "#50a14f" :weight normal :underline t)
+          ("CANCELLED" :foreground "#ff6480" :weight normal :underline t))
+        org-agenda-files (directory-files-recursively "~/Documents/org/" "\.org$")
+        ))
 
 (use-package! org-super-agenda
   :after org-agenda
@@ -108,13 +124,17 @@
   (org-super-agenda-mode)
   )
 
+(use-package org-fancy-priorities
+  :ensure t
+  :hook
+  (org-mode . org-fancy-priorities-mode)
+  :config
+  (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
+
 (setq
  projectile-project-search-path '("~/code/"))
 
 (elcord-mode)
-
-(custom-set-faces!
-  '(doom-modeline-buffer-modified :foreground "orange"))
 
 (defun doom-modeline-conditional-buffer-encoding ()
   "We expect the encoding to be LF UTF-8, so only show the modeline when this is not the case"
@@ -124,7 +144,8 @@
 
 (add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
 
-(custom-set-faces! '(doom-modeline-evil-insert-state :weight bold :foreground "#339CDB"))
+(setq doom-modeline-env-version t
+      doom-modeline-lsp t)
 
 (setq doom-fallback-buffer-name "► Doom"
       +doom-dashboard-name "► Doom")

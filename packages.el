@@ -7,7 +7,7 @@
   :recipe (:host github :repo "mickeynp/ligature.el"))
 (package! all-the-icons)
 (package! org-bullets)
-
+(package! org-fancy-priorities)
 ;; Treemacs
 (package! treemacs-icons-dired)
 
