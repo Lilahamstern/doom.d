@@ -128,9 +128,9 @@ Display line numbers
   :config
   (centaur-tabs-mode t)
   (centaur-tabs-headline-match)
-  (setq centaur-tabs-set-bar 'over
-        centaur-tabs-style "bar"
+  (setq centaur-tabs-style "bar"
         centaur-tabs-set-icons t
+        centaur-tabs-set-bar 'over
         centaur-tabs-set-close-button nil
         centaur-tabs-set-modified-marker t
         centaur-tabs-modified-marker "•"
@@ -154,9 +154,21 @@ Display line numbers
 (after! org
   (require 'org-bullets)
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-  (setq org-directory "~/Documents/org/"
+  (setq org-priority-faces '((65 :foreground "#e45649")
+                             (66 :foreground "#da8548")
+                             (67 :foreground "#0098dd"))
+        org-directory "~/Documents/org/"
         org-ellipsis " ▼ "
-        org-log-done 'time))
+        org-log-done 'time
+        org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)"))
+        org-todo-keyword-faces
+        '(("TODO" :foreground "#7c7c75" :weight normal :underline t)
+          ("WAITING" :foreground "#9f7efe" :weight normal :underline t)
+          ("INPROGRESS" :foreground "#0098dd" :weight normal :underline t)
+          ("DONE" :foreground "#50a14f" :weight normal :underline t)
+          ("CANCELLED" :foreground "#ff6480" :weight normal :underline t))
+        org-agenda-files (directory-files-recursively "~/Documents/org/" "\.org$")
+        ))
 #+end_src
 
 *** Org Super Agenda
@@ -176,6 +188,15 @@ Display line numbers
   :config
   (org-super-agenda-mode)
   )
+#+end_src
+*** Fancy priorities
+#+begin_src emacs-lisp :tangle yes
+(use-package org-fancy-priorities
+  :ensure t
+  :hook
+  (org-mode . org-fancy-priorities-mode)
+  :config
+  (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
 #+end_src
 ** Projectile
 #+begin_src emacs-lisp :tangle yes
