@@ -14,6 +14,7 @@
 - [[#packages][Packages]]
   - [[#centaur-tabs][Centaur Tabs]]
   - [[#which-key][Which key]]
+  - [[#magit][Magit]]
   - [[#org][Org]]
   - [[#projectile][Projectile]]
   - [[#elcord][Elcord]]
@@ -141,6 +142,12 @@ Display line numbers
 ** Which key
 #+begin_src emacs-lisp :tangle yes
 (setq which-key-idle-delay 0.5)
+#+end_src
+** Magit
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      :desc "Magit push"
+      "g p" 'magit-push)
 #+end_src
 ** Org
 #+begin_src emacs-lisp :tangle yes
