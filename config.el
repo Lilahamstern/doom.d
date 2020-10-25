@@ -65,6 +65,36 @@
       :desc "SSH into custom server"
       "\\ d" #'ssh-conn())
 
+(eval-after-load
+    'company
+  '(add-to-list 'company-backends 'company-omnisharp))
+
+(add-hook 'csharp-mode-hook #'company-mode)
+;; (eval-after-load
+;;     'company
+;;   '(add-to-list 'company-backends #'company-omnisharp))
+
+;; (defun custom-csharp-mode-setup ()
+;;   (omnisharp-mode)
+;;   (company-mode)
+
+;;   (setq indent-tabs-mode t)
+;;   (setq c-syntactic-indentation t)
+;;   (c-set-style "ellemtel")
+;;   (setq c-basic-offset 4)
+;;   (setq truncate-lines t)
+;;   (setq tab-width 4)
+;;   (setq evil-shift-width 4)
+
+;; ;;  (electric-pair-local-mode 1) ;; Emacs 25
+
+;;   (local-set-key (kbd "C-c R") 'dotnet-run)
+;;   (local-set-key (kbd "C-c r r") 'omnisharp-run-code-action-refactoring)
+;;   (local-set-key (kbd "C-c f") 'omnisharp-code-format-entire-file)
+;;   (local-set-key (kbd "C-c C-c") 'recompile))
+
+;; (add-hook 'csharp-mode-hook 'custom-csharp-mode-setup t)
+
 (use-package centaur-tabs
   :init
   (setq centaur-tabs-enable-key-bindings t)
@@ -132,7 +162,7 @@
   (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
 
 (setq
- projectile-project-search-path '("~/code/"))
+ projectile-project-search-path '("~/code/*"))
 
 (elcord-mode)
 

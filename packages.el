@@ -8,6 +8,8 @@
 (package! all-the-icons)
 (package! org-bullets)
 (package! org-fancy-priorities)
+(package! omnisharp)
+
 ;; Treemacs
 (package! treemacs-icons-dired)
 
